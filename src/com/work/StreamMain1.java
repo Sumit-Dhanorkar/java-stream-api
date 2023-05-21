@@ -1,4 +1,4 @@
-package work;
+package com.work;
 
 import java.util.ArrayList;
 import java.util.Arrays;

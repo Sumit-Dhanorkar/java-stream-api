@@ -1,6 +1,5 @@
-package work;
+package com.work;
 
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public class StreamObject {
