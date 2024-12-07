@@ -2,6 +2,7 @@ package com.medium;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -109,6 +110,49 @@ public class GroupByEx {
                 .collect(Collectors.joining(",  "));
 
         System.out.println(collect4);
+
+        //duplicates in list.
+        List<Integer> list1 = Arrays.asList(1, 2, 3, 3, 2, 2, 3, 4, 4, 6);
+
+        //1. using set
+        Set<Integer > set = new HashSet<>();
+        Set<Integer> collect53 = list1.stream()
+                .filter(a -> !set.add(a))
+                .collect(Collectors.toSet());
+
+        /*
+            Collectors.groupingBy -> creates the key value pair (map).
+            public static <T, K> Collector<T, ?, Map<K, List<T>>>
+                groupingBy(Function<? super T, ? extends K> classifier) {
+                    return groupingBy(classifier, toList());
+             }
+
+             if we see above parameter
+             Function- >
+             each and every element which comes to this grouping by applies
+             the function on the input and makes it as key and second argument
+             as what type of output we need to get.
+
+         */
+
+        Function.identity(); // returns what it gets
+
+        List<String> collect5 = employees.stream()
+                .map(Employee::getName)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream().filter(entry -> entry.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        //using Collections.frequency()
+        List<String> list = employees.stream().map(Employee::getName).collect(Collectors.toList());
+        Set<String> collect6 = list.stream()
+                .filter(name -> Collections.frequency(list, name) > 1)
+                .collect(Collectors.toSet());
+
+
+
+        System.out.println(collect6);
 
     }
 }
